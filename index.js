@@ -99,7 +99,13 @@ function prepFile(f) {
          for (let i = 0; i < dataCopy.length; i++) {
             $('.output').value += Object.values(dataCopy[i]) + '\n';
          }
+         const p = document.createElement('p');
+         p.innerHTML = 'Done!';
+         document.body.appendChild(p);
+         
          alert('Error with lines ' + errorLines.map(x => x + 2))
+
+
 
          // const download = document.createElement('button');
          // download.innerText = 'Download CSV';
