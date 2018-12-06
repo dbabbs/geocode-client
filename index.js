@@ -102,8 +102,9 @@ function prepFile(f) {
          const p = document.createElement('p');
          p.innerHTML = 'Done!';
          document.body.appendChild(p);
-         
-         alert('Error with lines ' + errorLines.map(x => x + 2))
+         if (errorLines.length > 0) {
+            alert('Error with lines ' + errorLines.map(x => x + 2))
+         }
 
 
 
