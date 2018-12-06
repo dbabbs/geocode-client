@@ -83,13 +83,13 @@ function prepFile(f) {
 
             if (res[i].Response.hasOwnProperty('View') && res[i].Response.View.length > 0) {
 
-               dataCopy[i].latitude = res[i].Response.View[0].Result[0].Location.NavigationPosition[0].Latitude;
-               dataCopy[i].longitude = res[i].Response.View[0].Result[0].Location.NavigationPosition[0].Longitude;
+               dataCopy[i].Latitude = res[i].Response.View[0].Result[0].Location.NavigationPosition[0].Latitude;
+               dataCopy[i].Longitude = res[i].Response.View[0].Result[0].Location.NavigationPosition[0].Longitude;
 
             } else {
                errorLines.push(i)
-               dataCopy[i].latitude = 'error'
-               dataCopy[i].longitude = 'error'
+               dataCopy[i].Latitude = 'error'
+               dataCopy[i].Longitude = 'error'
 
             }
             console.log(dataCopy[i].latitude)
