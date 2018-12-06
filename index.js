@@ -46,6 +46,8 @@ function prepFile(f) {
    console.log(outputAsDict)
    // $('.output').value = outputasArray.data.map(x => `${x}\n`);
 
+   outputAsDict.data = outputAsDict.data.filter(x => Object.keys(x).length === headers.length)
+
    $('.output').value = Object.keys(outputAsDict.data[0]) +'\n';
    for (let i = 0; i < outputAsDict.data.length; i++) {
       $('.output').value += Object.values(outputAsDict.data[i]) + '\n';
