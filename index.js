@@ -98,6 +98,8 @@ function prepFile(f) {
 
             }
          }
+
+         plot(dataCopy)
          $('.output').value = Papa.unparse(dataCopy)
 
          const p = document.createElement('p');
@@ -135,4 +137,35 @@ function downloadFile(file, fileName) {
    document.body.appendChild(element);
    element.click();
    document.body.removeChild(element);
+}
+
+
+function plot(data) {
+   if (document.getElementById('map')) {
+      document.getElementById('map').parentNode.removeChild(document.getElementById('map'))
+   }
+   // clearMap();
+   const hereTileUrl = `https://2.base.maps.api.here.com/maptile/2.1/maptile/newest/reduced.day/{z}/{x}/{y}/512/png8?app_id=${hereCredentials.id}&app_code=${hereCredentials.code}&ppi=320`;
+
+   const mapContainer = document.createElement('div');
+   mapContainer.id = 'map';
+   document.body.appendChild(mapContainer)
+
+   const map = L.map('map', {
+      center: [52.368707, 4.922624],
+      zoom: 3,
+      layers: [L.tileLayer(hereTileUrl)],
+      zoomControl: false
+   });
+   console.log(data)
+   let markerGroup = [];
+   for (let i = 0; i < data.length; i++) {
+      const loc = [data[i].Latitude, data[i].Longitude];
+      const marker = L.marker(loc).addTo(map)
+      markerGroup.push(L.marker(loc))
+   }
+   const group = new L.featureGroup(markerGroup);
+
+   map.fitBounds(group.getBounds());
+
 }
