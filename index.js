@@ -42,16 +42,21 @@ function prepFile(f) {
    });
    const outputasArray = Papa.parse(f);
 
+   // var out = CSV.serialize(f, dialect);
+   // console.log(out)
+
    const headers = Object.keys(outputAsDict.data[0]);
    console.log(outputAsDict)
    // $('.output').value = outputasArray.data.map(x => `${x}\n`);
 
    outputAsDict.data = outputAsDict.data.filter(x => Object.keys(x).length === headers.length)
 
-   $('.output').value = Object.keys(outputAsDict.data[0]) +'\n';
-   for (let i = 0; i < outputAsDict.data.length; i++) {
-      $('.output').value += Object.values(outputAsDict.data[i]) + '\n';
-   }
+
+   $('.output').value = Papa.unparse(outputAsDict)
+
+   const label = document.createElement('span');
+   label.innerText = 'Column to geocode: ';
+   document.body.appendChild(label);
 
    const select = document.createElement('select');
    select.id = 'header-options';
@@ -92,13 +97,9 @@ function prepFile(f) {
                dataCopy[i].Longitude = 'error'
 
             }
-            console.log(dataCopy[i].latitude)
          }
+         $('.output').value = Papa.unparse(dataCopy)
 
-         $('.output').value = Object.keys(dataCopy[0]) +'\n';
-         for (let i = 0; i < dataCopy.length; i++) {
-            $('.output').value += Object.values(dataCopy[i]) + '\n';
-         }
          const p = document.createElement('p');
          p.innerHTML = 'Done!';
          document.body.appendChild(p);
