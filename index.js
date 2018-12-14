@@ -77,11 +77,11 @@ function prepFile(f) {
       const selection = $('#header-options').options[$('#header-options').selectedIndex].innerText;
       console.log(selection)
       const urls = outputAsDict.data.map(x => makeGeocodeUrl(x[selection]));
-      console.log(urls);
+
 
       const promises = urls.map(url => fetch(url).then(y => y.json()));
       Promise.all(promises).then(res => {
-         console.log(res)
+         // console.log(res)
          const dataCopy = JSON.parse(JSON.stringify(outputAsDict.data))
          const errorLines = []
          for (let i = 0; i < dataCopy.length; i++) {
@@ -157,11 +157,24 @@ function plot(data) {
       layers: [L.tileLayer(hereTileUrl)],
       zoomControl: false
    });
-   console.log(data)
+   // console.log(data)
    let markerGroup = [];
    for (let i = 0; i < data.length; i++) {
       const loc = [data[i].Latitude, data[i].Longitude];
-      const marker = L.marker(loc).addTo(map)
+
+      const popupContent = Object.keys(data[i]).map(x => `<div>${x}: ${data[i][x]}</div>`).join('');
+      console.log(popupContent)
+
+      const marker = L.marker(loc).addTo(map);
+
+      marker.bindPopup(popupContent);
+      marker.on('mouseover', (e) => {
+           this.openPopup();
+      });
+      marker.on('mouseout', (e) => {
+           this.closePopup();
+      });
+
       markerGroup.push(L.marker(loc))
    }
    const group = new L.featureGroup(markerGroup);
